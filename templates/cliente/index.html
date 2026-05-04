@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bazar</title>
+  </head>
+  <body>
+    <h1>Bazar</h1>
+
+    {% for p in productos %}
+    <div>
+      <h3>{{ p.nombre }}</h3>
+      <p>Precio: ${{ p.precio }}</p>
+      <a href="/agregar/{{ p.id }}">Agregar al carrito</a>
+    </div>
+    <hr />
+    {% endfor %}
+
+    <a href="/carrito">Ver carrito</a>
+  </body>
+</html>

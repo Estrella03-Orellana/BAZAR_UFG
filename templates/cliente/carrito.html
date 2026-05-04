@@ -1,0 +1,13 @@
+<h1>Carrito</h1>
+
+{% for p in carrito %}
+<div>
+  <h3>{{ p.nombre }}</h3>
+  <p>${{ p.precio }}</p>
+  <a href="/eliminar/{{ p.id }}">Eliminar</a>
+</div>
+{% endfor %}
+
+<h2>Total: ${{ total }}</h2>
+
+<a href="/">Volver</a>
