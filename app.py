@@ -1,13 +1,19 @@
 from flask import Flask, render_template, redirect, session
 import csv
+import os
 
 app = Flask(__name__)
 app.secret_key = "clave"
 
+# Ruta base del proyecto
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 def cargar_productos():
     productos = []
-    with open('productos.csv', newline='', encoding='utf-8') as archivo:
+    ruta = os.path.join(BASE_DIR, 'data', 'productos.csv')
+
+    with open(ruta, newline='', encoding='utf-8') as archivo:
         reader = csv.DictReader(archivo)
         for fila in reader:
             productos.append({
@@ -21,7 +27,9 @@ def cargar_productos():
 
 def cargar_categorias():
     categorias = []
-    with open('categorias.csv', newline='', encoding='utf-8') as archivo:
+    ruta = os.path.join(BASE_DIR, 'data', 'categorias.csv')
+
+    with open(ruta, newline='', encoding='utf-8') as archivo:
         reader = csv.DictReader(archivo)
         for fila in reader:
             categorias.append({
@@ -35,9 +43,11 @@ productos = cargar_productos()
 categorias = cargar_categorias()
 
 
+
 @app.route('/')
 def index():
-    return render_template('index.html', productos=productos)
+    return render_template('cliente/index.html', productos=productos)
+
 
 
 @app.route('/agregar/<int:id>')
@@ -48,6 +58,7 @@ def agregar(id):
     session['carrito'].append(id)
     session.modified = True
     return redirect('/')
+
 
 
 @app.route('/carrito')
@@ -62,7 +73,8 @@ def carrito():
             carrito_productos.append(p)
             total += p["precio"]
 
-    return render_template('carrito.html', carrito=carrito_productos, total=total)
+    return render_template('cliente/carrito.html', carrito=carrito_productos, total=total)
+
 
 
 @app.route('/eliminar/<int:id>')
