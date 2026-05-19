@@ -66,11 +66,15 @@ categorias = cargar_categorias()
 @app.route('/')
 def index():
 
+    productos = cargar_productos()
+
+    categorias = cargar_categorias()
+
     return render_template(
         'cliente/index.html',
-        productos=productos
+        productos=productos,
+        categorias=categorias
     )
-
 
 @app.route('/agregar/<int:id>')
 def agregar(id):

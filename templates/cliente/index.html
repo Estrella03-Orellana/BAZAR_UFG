@@ -11,12 +11,25 @@
 
     <hr />
 
+    <h2>Categorías</h2>
+
+    <ul>
+      {% for categoria in categorias %}
+
+      <li>{{ categoria.nombre }}</li>
+
+      {% endfor %}
+    </ul>
+
+    <hr />
+
     <h2>Productos Disponibles</h2>
 
     <table border="1" cellpadding="10">
       <tr>
         <th>Nombre</th>
         <th>Precio</th>
+        <th>Categoría</th>
         <th>Acción</th>
       </tr>
 
@@ -26,6 +39,11 @@
         <td>{{ p.nombre }}</td>
 
         <td>${{ p.precio }}</td>
+
+        <td>
+          {% for categoria in categorias %} {% if categoria.id == p.categoria_id
+          %} {{ categoria.nombre }} {% endif %} {% endfor %}
+        </td>
 
         <td>
           <a href="/agregar/{{ p.id }}"> Agregar al carrito </a>
@@ -38,13 +56,5 @@
     <br />
 
     <a href="/carrito"> 🛒 Ver carrito </a>
-
-    <br /><br />
-
-    <a href="/categorias"> Administrar Categorías </a>
-
-    <br /><br />
-
-    <a href="/productos"> Administrar Productos </a>
   </body>
 </html>
