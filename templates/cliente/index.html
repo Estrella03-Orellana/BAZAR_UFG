@@ -2,20 +2,49 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+
     <title>Bazar</title>
   </head>
+
   <body>
-    <h1>Bazar</h1>
+    <h1>🛍️ Bazar</h1>
 
-    {% for p in productos %}
-    <div>
-      <h3>{{ p.nombre }}</h3>
-      <p>Precio: ${{ p.precio }}</p>
-      <a href="/agregar/{{ p.id }}">Agregar al carrito</a>
-    </div>
     <hr />
-    {% endfor %}
 
-    <a href="/carrito">Ver carrito</a>
+    <h2>Productos Disponibles</h2>
+
+    <table border="1" cellpadding="10">
+      <tr>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Acción</th>
+      </tr>
+
+      {% for p in productos %}
+
+      <tr>
+        <td>{{ p.nombre }}</td>
+
+        <td>${{ p.precio }}</td>
+
+        <td>
+          <a href="/agregar/{{ p.id }}"> Agregar al carrito </a>
+        </td>
+      </tr>
+
+      {% endfor %}
+    </table>
+
+    <br />
+
+    <a href="/carrito"> 🛒 Ver carrito </a>
+
+    <br /><br />
+
+    <a href="/categorias"> Administrar Categorías </a>
+
+    <br /><br />
+
+    <a href="/productos"> Administrar Productos </a>
   </body>
 </html>

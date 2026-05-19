@@ -1,8 +1,10 @@
-<h1>Productos</h1>
+<h1>CRUD Productos</h1>
 
-<a href="/productos/crear"> Nuevo Producto </a>
+<a href="/productos/crear"> Crear Producto </a>
 
-<table border="1">
+<br /><br />
+
+<table border="1" cellpadding="10">
   <tr>
     <th>ID</th>
     <th>Nombre</th>
@@ -20,10 +22,16 @@
 
     <td>${{ producto['precio'] }}</td>
 
-    <td>{{ producto['categoria_id'] }}</td>
+    <td>
+      {% for categoria in categorias %} {% if categoria['id']|int ==
+      producto['categoria_id']|int %} {{ categoria['nombre'] }} {% endif %} {%
+      endfor %}
+    </td>
 
     <td>
       <a href="/productos/editar/{{ producto['id'] }}"> Editar </a>
+
+      |
 
       <a href="/productos/eliminar/{{ producto['id'] }}"> Eliminar </a>
     </td>
@@ -31,3 +39,7 @@
 
   {% endfor %}
 </table>
+
+<br />
+
+<a href="/"> Volver al inicio </a>

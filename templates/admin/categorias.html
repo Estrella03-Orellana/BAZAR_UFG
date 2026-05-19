@@ -1,8 +1,10 @@
-<h1>Categorías</h1>
+<h1>CRUD Categorías</h1>
 
-<a href="/categorias/crear"> Nueva Categoría </a>
+<a href="/categorias/crear"> Crear Categoría </a>
 
-<table border="1">
+<br /><br />
+
+<table border="1" cellpadding="10">
   <tr>
     <th>ID</th>
     <th>Nombre</th>
@@ -19,9 +21,15 @@
     <td>
       <a href="/categorias/editar/{{ categoria['id'] }}"> Editar </a>
 
+      |
+
       <a href="/categorias/eliminar/{{ categoria['id'] }}"> Eliminar </a>
     </td>
   </tr>
 
   {% endfor %}
 </table>
+
+<br />
+
+<a href="/"> Volver al inicio </a>

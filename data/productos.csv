@@ -1,7 +1,8 @@
 id,nombre,precio,categoria_id
-2,Pantalon,15,1
+2,Pantalon,20.0,1
 3,Zapatos,25,1
 4,Carro de juguete,8,2
 5,Muñeca,12,2
 6,Pelota,5,2
 7,Reloj,20,3
+8,Aritos plateados,3.0,3

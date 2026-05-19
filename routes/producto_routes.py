@@ -17,9 +17,12 @@ def listar_productos():
 
     productos = get_productos()
 
+    categorias = get_categorias()
+
     return render_template(
         'admin/productos.html',
-        productos=productos
+        productos=productos,
+        categorias=categorias
     )
 
 
