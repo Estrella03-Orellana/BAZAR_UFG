@@ -1,0 +1,27 @@
+<h1>Categorías</h1>
+
+<a href="/categorias/crear"> Nueva Categoría </a>
+
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Acciones</th>
+  </tr>
+
+  {% for categoria in categorias %}
+
+  <tr>
+    <td>{{ categoria['id'] }}</td>
+
+    <td>{{ categoria['nombre'] }}</td>
+
+    <td>
+      <a href="/categorias/editar/{{ categoria['id'] }}"> Editar </a>
+
+      <a href="/categorias/eliminar/{{ categoria['id'] }}"> Eliminar </a>
+    </td>
+  </tr>
+
+  {% endfor %}
+</table>

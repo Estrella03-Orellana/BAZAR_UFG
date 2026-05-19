@@ -1,0 +1,33 @@
+<h1>Productos</h1>
+
+<a href="/productos/crear"> Nuevo Producto </a>
+
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Precio</th>
+    <th>Categoría</th>
+    <th>Acciones</th>
+  </tr>
+
+  {% for producto in productos %}
+
+  <tr>
+    <td>{{ producto['id'] }}</td>
+
+    <td>{{ producto['nombre'] }}</td>
+
+    <td>${{ producto['precio'] }}</td>
+
+    <td>{{ producto['categoria_id'] }}</td>
+
+    <td>
+      <a href="/productos/editar/{{ producto['id'] }}"> Editar </a>
+
+      <a href="/productos/eliminar/{{ producto['id'] }}"> Eliminar </a>
+    </td>
+  </tr>
+
+  {% endfor %}
+</table>
