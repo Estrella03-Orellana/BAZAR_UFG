@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Categorías — Bazar B.E.G.</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" />
+</head>
+<body>
+
+  {% include 'cliente/_navbar.html' %}
+
+  <div class="page">
+
+    <p class="section-title">Comprar por Categorías</p>
+
+    <!-- FILTRO POR CATEGORÍA -->
+    <div class="cat-chips">
+      <a href="/catalogo{% if busqueda %}?q={{ busqueda }}{% endif %}"
+         class="cat-chip {% if not cat_activa %}active{% endif %}">
+        Todos
+      </a>
+      {% for c in categorias %}
+      <a href="/catalogo?cat={{ c.id }}{% if busqueda %}&q={{ busqueda }}{% endif %}"
+         class="cat-chip {% if cat_activa == c.id %}active{% endif %}">
+        {{ c.nombre }}
+      </a>
+      {% endfor %}
+    </div>
+
+    <!-- RESULTADO BÚSQUEDA -->
+    {% if busqueda %}
+    <p style="font-size:.85rem; color:var(--gray); margin-bottom:20px;">
+      Resultados para <strong>"{{ busqueda }}"</strong>
+      — {{ productos|length }} producto(s) encontrado(s).
+      <a href="/catalogo{% if cat_activa %}?cat={{ cat_activa }}{% endif %}"
+         style="margin-left:8px; font-size:.8rem;">✕ Limpiar búsqueda</a>
+    </p>
+    {% endif %}
+
+    <p class="section-title">Nuestros Productos</p>
+
+    {% if productos %}
+    <div class="product-grid">
+      {% for p in productos %}
+      <div class="product-card">
+        <a href="/producto/{{ p.id }}" class="product-card-img-wrap">
+          <div class="product-card-img">
+            <img src="{{ url_for('static', filename='img/prod_' ~ p.id ~ '.jpg') }}"
+                 alt="{{ p.nombre }}"
+                 onerror="this.style.display='none'" />
+            <span class="prod-emoji">🛍️</span>
+          </div>
+        </a>
+        <div class="product-card-body">
+          <p class="product-card-cat">
+            {% for c in categorias %}
+              {% if c.id == p.categoria_id %}{{ c.nombre }}{% endif %}
+            {% endfor %}
+          </p>
+          <p class="product-card-name">{{ p.nombre }}</p>
+          <p class="product-card-price">${{ "%.2f"|format(p.precio) }}</p>
+          <div class="product-card-actions">
+            <a href="/producto/{{ p.id }}" class="btn-detalles">Ver Detalles</a>
+            <a href="/agregar/{{ p.id }}" class="btn-agregar-sm">+ Carrito</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-state-icon">🔍</div>
+      <p style="font-weight:600; margin-bottom:8px;">
+        No se encontraron productos{% if busqueda %} para "{{ busqueda }}"{% endif %}.
+      </p>
+      <a href="/catalogo" class="btn-pago">Ver todos los productos</a>
+    </div>
+    {% endif %}
+
+  </div>
+
+  <footer class="site-footer">
+    <a href="#">Acerca de Nosotros</a> &nbsp;|&nbsp; <a href="#">Contáctanos</a>
+    <p style="margin-top:8px;">@2026 BazarBEG. Todos los derechos reservados.</p>
+  </footer>
+
+  {% include 'cliente/_toast.html' %}
+
+</body>
+</html>

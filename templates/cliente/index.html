@@ -1,60 +1,62 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bazar B.E.G.</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" />
+</head>
+<body>
 
-    <title>Bazar</title>
-  </head>
+  {% include 'cliente/_navbar.html' %}
 
-  <body>
-    <h1>🛍️ Bazar</h1>
+  <div class="page">
 
-    <hr />
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-bg">
+        <img src="{{ url_for('static', filename='img/hero.jpg') }}"
+             class="hero-img" alt=""
+             onerror="this.style.display='none'" />
+        <div class="hero-overlay"></div>
+      </div>
+      <div class="hero-content">
+        <p class="hero-label">✦ Bienvenida a Bazar B.E.G.</p>
+        <h1 class="hero-title" style="color:white; font-family:'Playfair Display',serif; padding:0; margin-bottom:10px;">BAZAR B.E.G.</h1>
+        <p class="hero-sub">Brilla. Encanta. Gobierna.<br>El brillo suplica por ti, encuéntralo aquí.</p>
+        <a href="/catalogo" class="btn-hero">Shop Now</a>
+      </div>
+    </div>
 
-    <h2>Categorías</h2>
+    <!-- CATEGORÍAS -->
+    <p class="section-title">Comprar por Categorías</p>
 
-    <ul>
-      {% for categoria in categorias %}
-
-      <li>{{ categoria.nombre }}</li>
-
+    {% if categorias %}
+    <div class="cat-grid">
+      {% for c in categorias %}
+      <a href="/catalogo?cat={{ c.id }}" class="cat-card">
+        <div class="cat-card-img">
+          <img src="{{ url_for('static', filename='img/cat_' ~ c.id ~ '.jpg') }}"
+               alt="{{ c.nombre }}"
+               onerror="this.style.display='none'" />
+          <span class="cat-card-emoji">🛍️</span>
+        </div>
+        <p class="cat-card-name">{{ c.nombre }}</p>
+      </a>
       {% endfor %}
-    </ul>
+    </div>
+    {% else %}
+    <p style="color:var(--gray); padding-bottom:32px;">No hay categorías disponibles.</p>
+    {% endif %}
 
-    <hr />
+  </div>
 
-    <h2>Productos Disponibles</h2>
+  <footer class="site-footer">
+    <a href="#">Acerca de Nosotros</a> &nbsp;|&nbsp; <a href="#">Contáctanos</a>
+    <p style="margin-top:8px;">@2026 BazarBEG. Todos los derechos reservados.</p>
+  </footer>
 
-    <table border="1" cellpadding="10">
-      <tr>
-        <th>Nombre</th>
-        <th>Precio</th>
-        <th>Categoría</th>
-        <th>Acción</th>
-      </tr>
+  {% include 'cliente/_toast.html' %}
 
-      {% for p in productos %}
-
-      <tr>
-        <td>{{ p.nombre }}</td>
-
-        <td>${{ p.precio }}</td>
-
-        <td>
-          {% for categoria in categorias %} {% if categoria.id == p.categoria_id
-          %} {{ categoria.nombre }} {% endif %} {% endfor %}
-        </td>
-
-        <td>
-          <a href="/agregar/{{ p.id }}"> Agregar al carrito </a>
-        </td>
-      </tr>
-
-      {% endfor %}
-    </table>
-
-    <br />
-
-    <a href="/carrito"> 🛒 Ver carrito </a>
-  </body>
+</body>
 </html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ producto.nombre }} — Bazar B.E.G.</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" />
+</head>
+<body>
+
+  {% include 'cliente/_navbar.html' %}
+
+  <div class="page">
+
+    <a href="/catalogo" class="back-link">← Volver al catálogo</a>
+
+    <div class="detalle-grid">
+
+      <!-- IMAGEN -->
+      <div class="detalle-img">
+        <img src="{{ url_for('static', filename='img/prod_' ~ producto.id ~ '.jpg') }}"
+             alt="{{ producto.nombre }}"
+             class="detalle-img-real"
+             onerror="this.style.display='none'" />
+        <span class="detalle-img-emoji">🛍️</span>
+      </div>
+
+      <!-- INFO -->
+      <div>
+        {% if categoria %}
+        <a href="/catalogo?cat={{ categoria.id }}" class="detalle-cat">
+          {{ categoria.nombre }}
+        </a>
+        {% endif %}
+
+        <h1 class="detalle-nombre" style="padding:0;">{{ producto.nombre }}</h1>
+        <p class="detalle-cat-tag">
+          {% if categoria %}Categoría: {{ categoria.nombre }}{% endif %}
+        </p>
+
+        <p class="detalle-precio">
+          ${{ "%.2f"|format(producto.precio) }}
+          <span class="detalle-impuesto">Impuestos incluidos</span>
+        </p>
+
+        <p class="detalle-stock">● En stock</p>
+
+        <a href="/agregar/{{ producto.id }}" class="btn-add-cart">
+          Añadir al carrito
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <a href="#">Acerca de Nosotros</a> &nbsp;|&nbsp; <a href="#">Contáctanos</a>
+    <p style="margin-top:8px;">@2026 BazarBEG. Todos los derechos reservados.</p>
+  </footer>
+
+  {% include 'cliente/_toast.html' %}
+
+</body>
+</html>

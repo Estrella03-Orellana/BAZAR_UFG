@@ -1,17 +1,24 @@
-<h1>Crear Categoría</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nueva Categoría — Admin</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" />
+</head>
+<body>
 
-<form method="POST">
-  <label>Nombre:</label>
+  <h1>Crear Categoría</h1>
+
+  <form method="POST" action="/categorias/crear">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required />
+
+    <button type="submit">Guardar</button>
+  </form>
 
   <br />
+  <a href="/categorias" class="accion-volver">← Volver</a>
 
-  <input type="text" name="nombre" required />
-
-  <br /><br />
-
-  <button type="submit">Guardar</button>
-</form>
-
-<br />
-
-<a href="/categorias"> Volver </a>
+</body>
+</html>

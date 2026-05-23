@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Historial — Bazar B.E.G.</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" />
+</head>
+<body>
+
+  {% include 'cliente/_navbar.html' %}
+
+  <div class="page">
+
+    <p class="section-title">Mis Pedidos</p>
+
+    <div class="carrito-card" style="max-width:600px;">
+      <div class="empty-state">
+        <div class="empty-state-icon">📦</div>
+        <p style="font-weight:600; font-size:.95rem; margin-bottom:8px;">No hay pedidos aún</p>
+        <p style="font-size:.85rem; color:var(--gray); margin-bottom:0;">
+          Cuando realices una compra, tus pedidos aparecerán aquí con su número, fecha, estado y total pagado.
+        </p>
+        <a href="/catalogo" class="btn-pago" style="margin-top:24px;">Ir a comprar</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <a href="#">Acerca de Nosotros</a> &nbsp;|&nbsp; <a href="#">Contáctanos</a>
+    <p style="margin-top:8px;">@2026 BazarBEG. Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+</html>
