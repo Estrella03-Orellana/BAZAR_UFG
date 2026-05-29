@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Iniciar Sesión — Bazar B.E.G.</title>
+  <title>Acceso Denegado — Bazar B.E.G.</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" />
 </head>
 <body class="login-body">
@@ -15,8 +15,9 @@
     </div>
 
     <h1>403 - Acceso Denegado</h1>
-    <p>No tienes permisos de ADMINISTRADOR para ver esta página.</p>
-    <a href="/">Volver al Inicio</a>
+    <p class="detalle-cat-tag">No tienes permisos de ADMINISTRADOR para ver esta página.</p>
+    <br/>
+    <a href="/" class="btn-agregar-sm">Volver al Inicio</a>
   </div>
 
 </body>
