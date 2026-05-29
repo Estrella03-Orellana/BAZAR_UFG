@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" />
 </head>
 <body>
+  {% include 'admin/_navbar.html' %}
+  <main class="page admin-page">
 
   <h1>Editar Producto</h1>
 
@@ -35,5 +37,6 @@
   <br />
   <a href="/productos" class="accion-volver">← Volver</a>
 
+  </main>
 </body>
 </html>

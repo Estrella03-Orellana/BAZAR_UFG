@@ -76,6 +76,37 @@ a:hover { text-decoration: underline; }
 }
 .nav-icon:hover { color: var(--purple); text-decoration: none; }
 
+.admin-navbar .nav-links {
+  gap: 16px;
+}
+.admin-navbar .nav-links a {
+  color: var(--gray); font-weight: 600; letter-spacing: .5px;
+}
+.admin-dashboard-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px; margin-top: 26px;
+}
+.admin-card {
+  background: var(--white); border-radius: var(--radius);
+  padding: 24px; box-shadow: var(--shadow);
+  display: flex; flex-direction: column; gap: 16px;
+}
+.admin-card svg {
+  width: 34px; height: 34px; color: var(--purple);
+}
+.admin-card-title {
+  font-size: 1.05rem; font-weight: 700;
+}
+.admin-card-text {
+  color: var(--gray); line-height: 1.6;
+}
+.admin-card-link {
+  margin-top: auto; font-weight: 700; color: var(--purple);
+}
+.admin-page {
+  max-width: 1100px; margin: 24px auto; padding: 0 24px 36px;
+}
+
 /* ── PAGE WRAPPER ── */
 .page {
   max-width: 1100px; margin: 0 auto; padding: 36px 24px;

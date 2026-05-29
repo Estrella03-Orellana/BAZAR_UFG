@@ -40,9 +40,9 @@ def login():
                 session['usuario_rol'] = user['rol']
                 
                 if user['rol'] == 'ADMINISTRADOR':
-                    return redirect(url_for('categoria_bp.listar_categorias'))
+                    return redirect(url_for('admin_dashboard'))
                 else:
-                    return redirect(url_for('home_bp.index'))
+                    return redirect(url_for('index'))
                     
         flash('Correo o contraseña incorrectos', 'error')
         return redirect(url_for('login_bp.login'))
@@ -53,7 +53,7 @@ def login():
 @login_bp.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('home_bp.index'))
+    return redirect(url_for('index'))
 
 
 @login_bp.route('/access-denied')

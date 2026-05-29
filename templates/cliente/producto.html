@@ -45,9 +45,15 @@
 
         <p class="detalle-stock">● En stock</p>
 
-        <a href="/agregar/{{ producto.id }}" class="btn-add-cart">
+        {% if session.get('usuario_rol') == 'CLIENTE' %}
+        <a href="{{ url_for('agregar', id=producto.id) }}" class="btn-add-cart">
           Añadir al carrito
         </a>
+        {% else %}
+        <a href="{{ url_for('login_bp.login') }}" class="btn-add-cart">
+          Añadir al carrito
+        </a>
+        {% endif %}
       </div>
 
     </div>

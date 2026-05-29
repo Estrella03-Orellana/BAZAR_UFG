@@ -61,8 +61,12 @@
           <p class="product-card-name">{{ p.nombre }}</p>
           <p class="product-card-price">${{ "%.2f"|format(p.precio) }}</p>
           <div class="product-card-actions">
-            <a href="/producto/{{ p.id }}" class="btn-detalles">Ver Detalles</a>
-            <a href="/agregar/{{ p.id }}" class="btn-agregar-sm">+ Carrito</a>
+            <a href="{{ url_for('detalle_producto', id=p.id) }}" class="btn-detalles">Ver Detalles</a>
+            {% if session.get('usuario_rol') == 'CLIENTE' %}
+            <a href="{{ url_for('agregar', id=p.id) }}" class="btn-agregar-sm">+ Carrito</a>
+            {% else %}
+            <a href="{{ url_for('login_bp.login') }}" class="btn-agregar-sm">+ Carrito</a>
+            {% endif %}
           </div>
         </div>
       </div>

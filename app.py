@@ -4,7 +4,7 @@ import os
 
 from routes.categoria_routes import categoria_bp
 from routes.producto_routes import producto_bp
-from routes.login_routes import login_bp
+from routes.login_routes import login_bp, role_required
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -95,6 +95,7 @@ def detalle_producto(id):
 
 
 @app.route('/agregar/<int:id>')
+@role_required(['CLIENTE'])
 def agregar(id):
     if 'carrito' not in session:
         session['carrito'] = []
@@ -106,6 +107,7 @@ def agregar(id):
 
 
 @app.route('/carrito')
+@role_required(['CLIENTE'])
 def carrito():
     carrito_ids = session.get('carrito', [])
     productos_cargados = cargar_productos()
@@ -123,6 +125,7 @@ def carrito():
 
 
 @app.route('/eliminar/<int:id>')
+@role_required(['CLIENTE'])
 def eliminar(id):
     if 'carrito' in session and id in session['carrito']:
         session['carrito'].remove(id)
@@ -132,8 +135,15 @@ def eliminar(id):
 
 
 @app.route('/historial')
+@role_required(['CLIENTE'])
 def historial():
     return render_template('cliente/historial.html')
+
+
+@app.route('/admin/dashboard')
+@role_required(['ADMINISTRADOR'])
+def admin_dashboard():
+    return render_template('admin/dashboard.html')
 
 
 if __name__ == '__main__':

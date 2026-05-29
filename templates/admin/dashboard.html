@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Admin</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" />
+</head>
+<body>
+  {% include 'admin/_navbar.html' %}
+  <main class="page admin-page">
+    <div class="page-header">
+      <h1>Panel de Control</h1>
+      <p>Usa los accesos rápidos para navegar entre las tareas administrativas.</p>
+    </div>
+
+    <section class="admin-dashboard-grid">
+      <article class="admin-card">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <h2 class="admin-card-title">Categorías</h2>
+        </div>
+        <p class="admin-card-text">Gestiona, edita o elimina categorías existentes y crea nuevas categorías para tus productos.</p>
+        <a href="{{ url_for('categoria_bp.listar_categorias') }}" class="admin-card-link">Ir a Categorías →</a>
+      </article>
+
+      <article class="admin-card">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18M3 12h18M3 18h18" />
+            <path d="M8 6v12" />
+          </svg>
+          <h2 class="admin-card-title">Productos</h2>
+        </div>
+        <p class="admin-card-text">Visualiza tus productos, crea nuevos artículos y administra los detalles de cada producto.</p>
+        <a href="{{ url_for('producto_bp.listar_productos') }}" class="admin-card-link">Ir a Productos →</a>
+      </article>
+
+      <article class="admin-card">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 17l5-5-5-5" />
+            <path d="M21 12H9" />
+            <path d="M7 6H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+          </svg>
+          <h2 class="admin-card-title">Cerrar sesión</h2>
+        </div>
+        <p class="admin-card-text">Finaliza tu sesión de administrador de forma segura y vuelve a la vista pública.</p>
+        <a href="{{ url_for('login_bp.logout') }}" class="admin-card-link">Salir →</a>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

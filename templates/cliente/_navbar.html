@@ -2,25 +2,25 @@
   <div class="navbar-inner">
     <a href="/" class="navbar-brand">Bazar <span>B.E.G.</span></a>
     <ul class="nav-links">
-      <li><a href="/catalogo">Categorías</a></li>
-      <li><a href="/carrito">Carrito de Compras</a></li>
-      <li><a href="/historial">Historial</a></li>
+      <li><a href="{{ url_for('catalogo') }}">Categorías</a></li>
+      <li><a href="{{ url_for('carrito') }}">Carrito de Compras</a></li>
+      <li><a href="{{ url_for('historial') }}">Historial</a></li>
     </ul>
-    <form class="nav-search" action="/catalogo" method="GET" style="flex-shrink:0;">
+    <form class="nav-search" action="{{ url_for('catalogo') }}" method="GET" style="flex-shrink:0;">
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
       </svg>
       <input type="text" name="q" placeholder="Buscar..."
              value="{{ busqueda|default('') }}" />
     </form>
-    <a href="/carrito" class="nav-icon" title="Carrito">
+    <a href="{{ url_for('carrito') }}" class="nav-icon" title="Carrito">
       <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
         <line x1="3" y1="6" x2="21" y2="6"/>
         <path d="M16 10a4 4 0 0 1-8 0"/>
       </svg>
     </a>
-    <a href="/login" class="nav-icon" title="Mi cuenta">
+    <a href="{{ url_for('login_bp.login') }}" class="nav-icon" title="Mi cuenta">
       <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
         <circle cx="12" cy="7" r="4"/>
