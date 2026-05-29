@@ -1,3 +1,5 @@
 id,nombre,apellido,email,password,rol
 1,Admin,Bazar,admin@bazar.com,admin123,ADMINISTRADOR
 2,Juan,Perez,juan@cliente.com,cliente123,CLIENTE
+3,Chele,Bolanos,chelinxtio@gmail.com,12345,CLIENTE
+4,Meynard,XD,hola@gmail.com,12345,CLIENTE

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-from services.csv_service import get_usuarios
+from services.csv_service import get_usuarios, add_usuario
 from functools import wraps
 
 login_bp = Blueprint('login_bp', __name__)
@@ -59,3 +59,40 @@ def logout():
 @login_bp.route('/access-denied')
 def access_denied():
     return render_template('access-denied.html')
+
+
+@login_bp.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        nombre = request.form.get('nombre')
+        apellido = request.form.get('apellido')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        password_confirm = request.form.get('password_confirm')
+        
+        # Validate passwords match
+        if password != password_confirm:
+            flash('Las contraseñas no coinciden', 'error')
+            return redirect(url_for('login_bp.register'))
+        
+        # Check if email already exists
+        usuarios = get_usuarios()
+        for user in usuarios:
+            if user['email'] == email:
+                flash('El correo ya está registrado', 'error')
+                return redirect(url_for('login_bp.register'))
+        
+        # Create new user
+        nuevo_usuario = {
+            'nombre': nombre,
+            'apellido': apellido,
+            'email': email,
+            'password': password,
+            'rol': 'CLIENTE'
+        }
+        
+        add_usuario(nuevo_usuario)
+        flash('Registro exitoso. Por favor inicia sesión.', 'success')
+        return redirect(url_for('login_bp.login'))
+    
+    return render_template('register.html')

@@ -75,6 +75,17 @@ a:hover { text-decoration: underline; }
   align-items: center; transition: color .2s;
 }
 .nav-icon:hover { color: var(--purple); text-decoration: none; }
+.nav-user {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 6px;
+}
+.nav-user-name {
+  font-size: .8rem; font-weight: 600;
+  color: var(--gray); white-space: nowrap;
+}
+.nav-user .nav-icon {
+  margin-left: 4px;
+}
 
 .admin-navbar .nav-links {
   gap: 16px;
@@ -533,6 +544,11 @@ body.login-body {
 .form-link a { color: var(--purple); font-weight: 600; }
 .alert-error {
   background: #fee2e2; color: #b91c1c;
+  border-radius: 7px; padding: 10px 14px;
+  font-size: .83rem; margin-bottom: 16px;
+}
+.alert-success {
+  background: #dcfce7; color: #166534;
   border-radius: 7px; padding: 10px 14px;
   font-size: .83rem; margin-bottom: 16px;
 }

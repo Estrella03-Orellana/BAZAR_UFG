@@ -166,3 +166,35 @@ def delete_producto(id):
         writer.writeheader()
 
         writer.writerows(productos_filtrados)
+
+
+def add_usuario(usuario):
+
+    ruta = os.path.join(DATA_DIR, 'usuarios.csv')
+
+    usuarios = get_usuarios()
+
+    nuevo_id = 1
+
+    if usuarios:
+        nuevo_id = max(int(u['id']) for u in usuarios) + 1
+
+    if os.path.exists(ruta) and os.path.getsize(ruta) > 0:
+        with open(ruta, 'rb') as f:
+            content = f.read()
+            if content and not content.endswith(b'\n'):
+                with open(ruta, 'ab') as f:
+                    f.write(b'\n')
+
+    with open(ruta, mode='a', newline='', encoding='utf-8') as file:
+
+        writer = csv.writer(file)
+
+        writer.writerow([
+            nuevo_id,
+            usuario['nombre'],
+            usuario['apellido'],
+            usuario['email'],
+            usuario['password'],
+            usuario.get('rol', 'CLIENTE')
+        ])
