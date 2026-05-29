@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+from routes.login_routes import role_required
 
 from services.csv_service import (
     get_productos,
@@ -13,6 +14,7 @@ producto_bp = Blueprint('producto_bp', __name__)
 
 # LISTAR
 @producto_bp.route('/productos')
+@role_required(['ADMINISTRADOR'])
 def listar_productos():
 
     productos = get_productos()
@@ -28,6 +30,7 @@ def listar_productos():
 
 # CREAR
 @producto_bp.route('/productos/crear', methods=['GET', 'POST'])
+@role_required(['ADMINISTRADOR'])
 def crear_producto():
 
     categorias = get_categorias()
@@ -54,6 +57,7 @@ def crear_producto():
 
 # EDITAR
 @producto_bp.route('/productos/editar/<int:id>', methods=['GET', 'POST'])
+@role_required(['ADMINISTRADOR'])
 def editar_producto(id):
 
     productos = get_productos()
@@ -89,6 +93,7 @@ def editar_producto(id):
 
 # ELIMINAR
 @producto_bp.route('/productos/eliminar/<int:id>')
+@role_required(['ADMINISTRADOR'])
 def eliminar_producto(id):
 
     delete_producto(id)

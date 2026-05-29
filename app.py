@@ -7,7 +7,7 @@ from routes.producto_routes import producto_bp
 from routes.login_routes import login_bp
 
 app = Flask(__name__)
-app.secret_key = "clave_beg_2025"
+app.secret_key = os.urandom(24)
 
 app.register_blueprint(categoria_bp)
 app.register_blueprint(producto_bp)

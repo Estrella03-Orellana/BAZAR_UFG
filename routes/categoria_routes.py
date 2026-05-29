@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+from routes.login_routes import role_required
 
 from services.csv_service import (
     get_categorias,
@@ -12,6 +13,7 @@ categoria_bp = Blueprint('categoria_bp', __name__)
 
 # LISTAR
 @categoria_bp.route('/categorias')
+@role_required(['ADMINISTRADOR'])
 def listar_categorias():
 
     categorias = get_categorias()
@@ -24,6 +26,7 @@ def listar_categorias():
 
 # CREAR
 @categoria_bp.route('/categorias/crear', methods=['GET', 'POST'])
+@role_required(['ADMINISTRADOR'])
 def crear_categoria():
 
     if request.method == 'POST':
@@ -45,6 +48,7 @@ def crear_categoria():
 
 # EDITAR
 @categoria_bp.route('/categorias/editar/<int:id>', methods=['GET', 'POST'])
+@role_required(['ADMINISTRADOR'])
 def editar_categoria(id):
 
     categorias = get_categorias()
@@ -75,6 +79,7 @@ def editar_categoria(id):
 
 # ELIMINAR
 @categoria_bp.route('/categorias/eliminar/<int:id>')
+@role_required(['ADMINISTRADOR'])
 def eliminar_categoria(id):
 
     delete_categoria(id)
