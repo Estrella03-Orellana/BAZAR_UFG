@@ -1,28 +1,102 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Editar Categoría — Admin</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" />
-</head>
-<body>
-  {% include 'admin/_navbar.html' %}
-  <main class="page admin-page">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editar Categoría — Admin</title>
 
-  <h1>Editar Categoría</h1>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/estilos.css') }}"
+    />
+  </head>
 
-  <form method="POST" action="/categorias/editar/{{ categoria['id'] }}">
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre"
-           value="{{ categoria['nombre'] }}" required />
+  <body>
+    {% include 'admin/_navbar.html' %}
 
-    <button type="submit">Actualizar</button>
-  </form>
+    <main class="page admin-page">
+      <h1>Editar Categoría</h1>
 
-  <br />
-  <a href="/categorias" class="accion-volver">← Volver</a>
+      <form
+        method="POST"
+        enctype="multipart/form-data"
+        action="/categorias/editar/{{ categoria['id'] }}"
+      >
+        <label for="nombre"> Nombre: </label>
 
-  </main>
-</body>
+        <input
+          type="text"
+          id="nombre"
+          name="nombre"
+          value="{{ categoria['nombre'] }}"
+          required
+        />
+
+        <br /><br />
+
+        <label> Imagen actual: </label>
+
+        <br /><br />
+
+        <img
+          src="{{ url_for('static', filename='img/' + categoria['imagen']) }}"
+          alt="{{ categoria['nombre'] }}"
+          width="180"
+          style="border-radius: 10px; border: 1px solid #ccc; padding: 5px"
+        />
+
+        <br /><br />
+
+        <label for="imagen"> Seleccionar nueva imagen: </label>
+
+        <input type="file" id="imagen" name="imagen" accept="image/*" />
+
+        <br /><br />
+
+        <label> Vista previa: </label>
+
+        <br /><br />
+
+        <img
+          id="preview"
+          width="180"
+          style="
+            display: none;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 5px;
+          "
+        />
+
+        <br /><br />
+
+        <button type="submit">Actualizar</button>
+      </form>
+
+      <br />
+
+      <a href="/categorias" class="accion-volver"> ← Volver </a>
+    </main>
+
+    <script>
+      const inputImagen = document.getElementById("imagen");
+
+      inputImagen.addEventListener("change", function () {
+        const archivo = this.files[0];
+
+        if (!archivo) return;
+
+        const lector = new FileReader();
+
+        lector.onload = function (e) {
+          const preview = document.getElementById("preview");
+
+          preview.src = e.target.result;
+          preview.style.display = "block";
+        };
+
+        lector.readAsDataURL(archivo);
+      });
+    </script>
+  </body>
 </html>

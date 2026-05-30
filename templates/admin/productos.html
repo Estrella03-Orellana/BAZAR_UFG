@@ -1,58 +1,89 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Productos — Admin</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" />
-</head>
-<body>
-  {% include 'admin/_navbar.html' %}
-  <main class="page admin-page">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Productos — Admin</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/estilos.css') }}"
+    />
+  </head>
+  <body>
+    {% include 'admin/_navbar.html' %}
+    <main class="page admin-page">
+      <div class="page-header">
+        <h1>CRUD Productos</h1>
+        <a href="/productos/crear" class="accion-crear">+ Crear Producto</a>
+      </div>
 
-  <div class="page-header">
-    <h1>CRUD Productos</h1>
-    <a href="/productos/crear" class="accion-crear">+ Crear Producto</a>
-  </div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
 
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Precio</th>
-        <th>Categoría</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for producto in productos %}
-      <tr>
-        <td>{{ producto['id'] }}</td>
-        <td>{{ producto['nombre'] }}</td>
-        <td>${{ producto['precio'] }}</td>
-        <td>
-          {% for categoria in categorias %}
-            {% if categoria['id']|int == producto['categoria_id']|int %}
-              {{ categoria['nombre'] }}
-            {% endif %}
+        <tbody>
+          {% for producto in productos %}
+          <tr>
+            <td>{{ producto['id'] }}</td>
+
+            <td>
+              <img
+                src="{{ url_for('static', filename='img/' + producto['imagen']) }}"
+                alt="{{ producto['nombre'] }}"
+                width="80"
+                height="80"
+                style="object-fit: cover; border-radius: 8px"
+              />
+            </td>
+
+            <td>{{ producto['nombre'] }}</td>
+
+            <td>${{ producto['precio'] }}</td>
+
+            <td>
+              {% for categoria in categorias %} {% if categoria['id']|int ==
+              producto['categoria_id']|int %} {{ categoria['nombre'] }} {% endif
+              %} {% endfor %}
+            </td>
+
+            <td>
+              <a
+                href="/productos/editar/{{ producto['id'] }}"
+                class="accion-editar"
+              >
+                Editar
+              </a>
+
+              &nbsp;
+
+              <a
+                href="/productos/eliminar/{{ producto['id'] }}"
+                class="accion-eliminar"
+                onclick="
+                  return confirm(
+                    '¿Eliminar este producto? Esta acción no se puede deshacer.',
+                  );
+                "
+              >
+                Eliminar
+              </a>
+            </td>
+          </tr>
           {% endfor %}
-        </td>
-        <td>
-          <a href="/productos/editar/{{ producto['id'] }}" class="accion-editar">Editar</a>
-          &nbsp;
-          <a href="/productos/eliminar/{{ producto['id'] }}" class="accion-eliminar"
-             onclick="return confirm('¿Eliminar este producto? Esta acción no se puede deshacer.')">
-            Eliminar
-          </a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+        </tbody>
+      </table>
 
-  <a href="{{ url_for('admin_dashboard') }}" class="accion-volver">← Volver al dashboard</a>
-
-  </main>
-</body>
+      <a href="{{ url_for('admin_dashboard') }}" class="accion-volver">
+        ← Volver al dashboard
+      </a>
+    </main>
+  </body>
 </html>

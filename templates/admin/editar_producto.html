@@ -8,35 +8,96 @@
 </head>
 <body>
   {% include 'admin/_navbar.html' %}
+
   <main class="page admin-page">
 
-  <h1>Editar Producto</h1>
+    <h1>Editar Producto</h1>
 
-  <form method="POST" action="/productos/editar/{{ producto['id'] }}">
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre"
-           value="{{ producto['nombre'] }}" required />
+    <form
+      method="POST"
+      action="/productos/editar/{{ producto['id'] }}"
+      enctype="multipart/form-data"
+    >
 
-    <label for="precio">Precio:</label>
-    <input type="number" id="precio" step="0.01" name="precio"
-           value="{{ producto['precio'] }}" required />
+      <label for="nombre">Nombre:</label>
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        value="{{ producto['nombre'] }}"
+        required
+      />
 
-    <label for="categoria_id">Categoría:</label>
-    <select id="categoria_id" name="categoria_id">
-      {% for categoria in categorias %}
-      <option value="{{ categoria['id'] }}"
-        {% if categoria['id'] == producto['categoria_id'] %}selected{% endif %}>
-        {{ categoria['nombre'] }}
-      </option>
-      {% endfor %}
-    </select>
+      <label for="precio">Precio:</label>
+      <input
+        type="number"
+        id="precio"
+        step="0.01"
+        name="precio"
+        value="{{ producto['precio'] }}"
+        required
+      />
 
-    <button type="submit">Actualizar</button>
-  </form>
+      <label for="categoria_id">Categoría:</label>
+      <select id="categoria_id" name="categoria_id">
+        {% for categoria in categorias %}
+        <option
+          value="{{ categoria['id'] }}"
+          {% if categoria['id']|int == producto['categoria_id']|int %}
+            selected
+          {% endif %}
+        >
+          {{ categoria['nombre'] }}
+        </option>
+        {% endfor %}
+      </select>
 
-  <br />
-  <a href="/productos" class="accion-volver">← Volver</a>
+      <label>Imagen actual:</label>
+
+      <br>
+
+      <img
+        id="preview"
+        src="{{ url_for('static', filename='uploads/' + producto['imagen']) }}"
+        alt="Vista previa"
+        width="200"
+        style="margin-bottom:15px;"
+      >
+
+      <br>
+
+      <label for="imagen">Cambiar imagen:</label>
+      <input
+        type="file"
+        id="imagen"
+        name="imagen"
+        accept="image/*"
+      >
+
+      <br><br>
+
+      <button type="submit">Actualizar</button>
+
+    </form>
+
+    <br>
+
+    <a href="/productos" class="accion-volver">
+      ← Volver
+    </a>
 
   </main>
+
+  <script>
+    document.getElementById('imagen').addEventListener('change', function(e) {
+      const archivo = e.target.files[0];
+
+      if (archivo) {
+        document.getElementById('preview').src =
+          URL.createObjectURL(archivo);
+      }
+    });
+  </script>
+
 </body>
 </html>
