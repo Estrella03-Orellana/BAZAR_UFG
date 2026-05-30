@@ -28,7 +28,8 @@ def cargar_productos():
                 "id": int(fila["id"]),
                 "nombre": fila["nombre"],
                 "precio": float(fila["precio"]),
-                "categoria_id": int(fila["categoria_id"])
+                "categoria_id": int(fila["categoria_id"]),
+                "imagen": fila.get("imagen", "")
             })
     return productos
 
@@ -43,7 +44,8 @@ def cargar_categorias():
         for fila in reader:
             categorias.append({
                 "id": int(fila["id"]),
-                "nombre": fila["nombre"]
+                "nombre": fila["nombre"],
+                "imagen": fila.get("imagen", "")
             })
     return categorias
 

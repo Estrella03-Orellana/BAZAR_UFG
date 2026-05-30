@@ -205,6 +205,10 @@ a:hover { text-decoration: underline; }
 .cat-card-emoji {
   font-size: 2.8rem; position: relative; z-index: 1;
 }
+.cat-card-img img[style*="display:none"] + .cat-card-emoji,
+.cat-card-img img[style*="display: none"] + .cat-card-emoji {
+  display: flex;
+}
 .cat-card-name {
   padding: 10px 8px; font-size: .8rem; font-weight: 700;
   color: #111827; text-align: center;
@@ -253,12 +257,12 @@ a:hover { text-decoration: underline; }
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover;
 }
+.prod-emoji {
+  font-size: 2.4rem; position: relative; z-index: 1;
+}
 .product-card-img img[style*="display:none"] + .prod-emoji,
 .product-card-img img[style*="display: none"] + .prod-emoji {
   display: flex;
-}
-.prod-emoji {
-  font-size: 2.4rem; position: relative; z-index: 1;
 }
 .product-card-body {
   padding: 14px 16px; flex: 1;
@@ -319,7 +323,13 @@ a:hover { text-decoration: underline; }
   width: 100%; height: 100%; object-fit: cover;
   border-radius: var(--radius);
 }
-.detalle-img-emoji { position: relative; z-index: 1; }
+.detalle-img-emoji {
+  position: relative; z-index: 1;
+}
+.detalle-img img[style*="display:none"] + .detalle-img-emoji,
+.detalle-img img[style*="display: none"] + .detalle-img-emoji {
+  display: block;
+}
 .detalle-cat {
   display: inline-block; font-size: .73rem; font-weight: 700;
   color: var(--purple); text-transform: uppercase;

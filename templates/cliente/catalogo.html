@@ -46,9 +46,12 @@
       <div class="product-card">
         <a href="/producto/{{ p.id }}" class="product-card-img-wrap">
           <div class="product-card-img">
-            <img src="{{ url_for('static', filename='img/prod_' ~ p.id ~ '.jpg') }}"
+            {% if p.imagen %}
+            <img src="{{ url_for('static', filename='img/' ~ p.imagen) }}"
                  alt="{{ p.nombre }}"
-                 onerror="this.style.display='none'" />
+                 onload="this.nextElementSibling.style.display='none'"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+            {% endif %}
             <span class="prod-emoji">🛍️</span>
           </div>
         </a>

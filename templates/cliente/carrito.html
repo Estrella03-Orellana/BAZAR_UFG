@@ -20,9 +20,13 @@
       {% for p in carrito %}
       <div class="carrito-item">
         <div class="carrito-item-icon">
-          <img src="{{ url_for('static', filename='img/prod_' ~ p.id ~ '.jpg') }}"
-               alt="{{ p.nombre }}" onerror="this.style.display='none'" />
-          🛍️
+          {% if p.imagen %}
+          <img src="{{ url_for('static', filename='img/' ~ p.imagen) }}"
+               alt="{{ p.nombre }}"
+               onload="this.style.display='block'; this.nextElementSibling.style.display='none'"
+               onerror="this.style.display='none'" />
+          {% endif %}
+          <span class="carrito-item-emoji">🛍️</span>
         </div>
         <div class="carrito-item-info">
           <p class="carrito-item-name">{{ p.nombre }}</p>

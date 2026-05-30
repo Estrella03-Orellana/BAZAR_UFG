@@ -36,9 +36,12 @@
       {% for c in categorias %}
       <a href="/catalogo?cat={{ c.id }}" class="cat-card">
         <div class="cat-card-img">
-          <img src="{{ url_for('static', filename='img/cat_' ~ c.id ~ '.jpg') }}"
+          {% if c.imagen %}
+          <img src="{{ url_for('static', filename='img/' ~ c.imagen) }}"
                alt="{{ c.nombre }}"
-               onerror="this.style.display='none'" />
+               onload="this.nextElementSibling.style.display='none'"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+          {% endif %}
           <span class="cat-card-emoji">🛍️</span>
         </div>
         <p class="cat-card-name">{{ c.nombre }}</p>
