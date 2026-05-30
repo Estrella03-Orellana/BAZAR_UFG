@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from routes.login_routes import role_required
 
+import os
+from werkzeug.utils import secure_filename
+
 from services.csv_service import (
     get_productos,
     get_categorias,
@@ -11,6 +14,8 @@ from services.csv_service import (
 
 producto_bp = Blueprint('producto_bp', __name__)
 
+UPLOAD_FOLDER = 'static/img'
+
 
 # LISTAR
 @producto_bp.route('/productos')
@@ -18,7 +23,6 @@ producto_bp = Blueprint('producto_bp', __name__)
 def listar_productos():
 
     productos = get_productos()
-
     categorias = get_categorias()
 
     return render_template(
@@ -37,10 +41,24 @@ def crear_producto():
 
     if request.method == 'POST':
 
+        imagen = request.files['imagen']
+
+        nombre_imagen = ''
+
+        if imagen and imagen.filename:
+            nombre_imagen = secure_filename(imagen.filename)
+            imagen.save(
+                os.path.join(
+                    UPLOAD_FOLDER,
+                    nombre_imagen
+                )
+            )
+
         nuevo_producto = {
             "nombre": request.form['nombre'],
             "precio": float(request.form['precio']),
-            "categoria_id": int(request.form['categoria_id'])
+            "categoria_id": int(request.form['categoria_id']),
+            "imagen": nombre_imagen
         }
 
         add_producto(nuevo_producto)
@@ -61,7 +79,6 @@ def crear_producto():
 def editar_producto(id):
 
     productos = get_productos()
-
     categorias = get_categorias()
 
     producto = next(
@@ -71,11 +88,29 @@ def editar_producto(id):
 
     if request.method == 'POST':
 
+        nombre_imagen = producto['imagen']
+
+        imagen = request.files.get('imagen')
+
+        if imagen and imagen.filename:
+
+            nombre_imagen = secure_filename(
+                imagen.filename
+            )
+
+            imagen.save(
+                os.path.join(
+                    UPLOAD_FOLDER,
+                    nombre_imagen
+                )
+            )
+
         producto_actualizado = {
             "id": id,
             "nombre": request.form['nombre'],
             "precio": float(request.form['precio']),
-            "categoria_id": int(request.form['categoria_id'])
+            "categoria_id": int(request.form['categoria_id']),
+            "imagen": nombre_imagen
         }
 
         update_producto(producto_actualizado)

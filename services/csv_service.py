@@ -4,17 +4,24 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 
+
 def leer_csv(nombre_archivo):
     ruta = os.path.join(DATA_DIR, nombre_archivo)
+
     datos = []
+
     if not os.path.exists(ruta):
         return datos
-        
+
     with open(ruta, mode='r', encoding='utf-8') as file:
+
         reader = csv.DictReader(file)
+
         for row in reader:
             datos.append(row)
+
     return datos
+
 
 def get_categorias():
     return leer_csv('categorias.csv')
@@ -28,7 +35,9 @@ def get_usuarios():
     return leer_csv('usuarios.csv')
 
 
-
+# =========================
+# CATEGORIAS
+# =========================
 
 def add_categoria(categoria):
 
@@ -47,7 +56,8 @@ def add_categoria(categoria):
 
         writer.writerow([
             nuevo_id,
-            categoria['nombre']
+            categoria['nombre'],
+            categoria['imagen']
         ])
 
 
@@ -59,9 +69,12 @@ def update_categoria(categoria_actualizada):
 
     with open(ruta, mode='w', newline='', encoding='utf-8') as file:
 
-        fieldnames = ['id', 'nombre']
+        fieldnames = ['id', 'nombre', 'imagen']
 
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer = csv.DictWriter(
+            file,
+            fieldnames=fieldnames
+        )
 
         writer.writeheader()
 
@@ -70,6 +83,7 @@ def update_categoria(categoria_actualizada):
             if int(categoria['id']) == int(categoria_actualizada['id']):
 
                 categoria['nombre'] = categoria_actualizada['nombre']
+                categoria['imagen'] = categoria_actualizada['imagen']
 
             writer.writerow(categoria)
 
@@ -81,22 +95,28 @@ def delete_categoria(id):
     categorias = get_categorias()
 
     categorias_filtradas = [
-        categoria for categoria in categorias
+        categoria
+        for categoria in categorias
         if int(categoria['id']) != int(id)
     ]
 
     with open(ruta, mode='w', newline='', encoding='utf-8') as file:
 
-        fieldnames = ['id', 'nombre']
+        fieldnames = ['id', 'nombre', 'imagen']
 
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer = csv.DictWriter(
+            file,
+            fieldnames=fieldnames
+        )
 
         writer.writeheader()
 
         writer.writerows(categorias_filtradas)
 
 
-
+# =========================
+# PRODUCTOS
+# =========================
 
 def add_producto(producto):
 
@@ -117,7 +137,8 @@ def add_producto(producto):
             nuevo_id,
             producto['nombre'],
             producto['precio'],
-            producto['categoria_id']
+            producto['categoria_id'],
+            producto['imagen']
         ])
 
 
@@ -129,9 +150,18 @@ def update_producto(producto_actualizado):
 
     with open(ruta, mode='w', newline='', encoding='utf-8') as file:
 
-        fieldnames = ['id', 'nombre', 'precio', 'categoria_id']
+        fieldnames = [
+            'id',
+            'nombre',
+            'precio',
+            'categoria_id',
+            'imagen'
+        ]
 
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer = csv.DictWriter(
+            file,
+            fieldnames=fieldnames
+        )
 
         writer.writeheader()
 
@@ -142,6 +172,7 @@ def update_producto(producto_actualizado):
                 producto['nombre'] = producto_actualizado['nombre']
                 producto['precio'] = producto_actualizado['precio']
                 producto['categoria_id'] = producto_actualizado['categoria_id']
+                producto['imagen'] = producto_actualizado['imagen']
 
             writer.writerow(producto)
 
@@ -153,15 +184,25 @@ def delete_producto(id):
     productos = get_productos()
 
     productos_filtrados = [
-        producto for producto in productos
+        producto
+        for producto in productos
         if int(producto['id']) != int(id)
     ]
 
     with open(ruta, mode='w', newline='', encoding='utf-8') as file:
 
-        fieldnames = ['id', 'nombre', 'precio', 'categoria_id']
+        fieldnames = [
+            'id',
+            'nombre',
+            'precio',
+            'categoria_id',
+            'imagen'
+        ]
 
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer = csv.DictWriter(
+            file,
+            fieldnames=fieldnames
+        )
 
         writer.writeheader()
 

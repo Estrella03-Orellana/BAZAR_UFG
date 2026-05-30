@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from routes.login_routes import role_required
+import os
+from werkzeug.utils import secure_filename
 
 from services.csv_service import (
     get_categorias,
@@ -33,8 +35,21 @@ def crear_categoria():
 
         nombre = request.form['nombre']
 
+        imagen = request.files['imagen']
+
+        nombre_imagen = secure_filename(imagen.filename)
+
+        ruta_imagen = os.path.join(
+            'static',
+            'img',
+            nombre_imagen
+        )
+
+        imagen.save(ruta_imagen)
+
         nueva_categoria = {
-            "nombre": nombre
+            "nombre": nombre,
+            "imagen": nombre_imagen
         }
 
         add_categoria(nueva_categoria)
@@ -60,9 +75,28 @@ def editar_categoria(id):
 
     if request.method == 'POST':
 
+        nombre_imagen = categoria['imagen']
+
+        imagen = request.files['imagen']
+
+        if imagen and imagen.filename != "":
+
+            nombre_imagen = secure_filename(
+                imagen.filename
+            )
+
+            ruta_imagen = os.path.join(
+                'static',
+                'img',
+                nombre_imagen
+            )
+
+            imagen.save(ruta_imagen)
+
         categoria_actualizada = {
             "id": id,
-            "nombre": request.form['nombre']
+            "nombre": request.form['nombre'],
+            "imagen": nombre_imagen
         }
 
         update_categoria(categoria_actualizada)
@@ -75,7 +109,6 @@ def editar_categoria(id):
         'admin/editar_categoria.html',
         categoria=categoria
     )
-
 
 # ELIMINAR
 @categoria_bp.route('/categorias/eliminar/<int:id>')

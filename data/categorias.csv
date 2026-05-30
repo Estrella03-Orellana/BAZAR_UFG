@@ -1,5 +1,5 @@
-id,nombre
-1,Ropa Azul
-2,Juguetes
-3,Accesorios
-5,Test
+id,nombre,imagen
+1,Ropa,Sueter.jpg
+2,Skin Care,Skincare.jpg
+3,Accesorios,Accesorios.jpg
+4,Cabello,kitCabello.jpg

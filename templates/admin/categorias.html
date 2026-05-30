@@ -1,48 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Categorías — Admin</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" />
-</head>
-<body>
-  {% include 'admin/_navbar.html' %}
-  <main class="page admin-page">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Categorías — Admin</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/estilos.css') }}"
+    />
+  </head>
+  <body>
+    {% include 'admin/_navbar.html' %}
+    <main class="page admin-page">
+      <div class="page-header">
+        <h1>Gestión de Categorías</h1>
+        <a href="/categorias/crear" class="accion-crear">+ Nueva Categoría</a>
+      </div>
 
-  <div class="page-header">
-    <h1>Gestión de Categorías</h1>
-    <a href="/categorias/crear" class="accion-crear">+ Nueva Categoría</a>
-  </div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Imagen</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
 
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for categoria in categorias %}
-      <tr>
-        <td>{{ categoria['id'] }}</td>
-        <td>{{ categoria['nombre'] }}</td>
-        <td>
-          <a href="/categorias/editar/{{ categoria['id'] }}" class="accion-editar">Editar</a>
-          &nbsp;
-          <a href="/categorias/eliminar/{{ categoria['id'] }}" class="accion-eliminar"
-             onclick="return confirm('¿Eliminar esta categoría? Esta acción no se puede deshacer.')">
-            Eliminar
-          </a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+        <tbody>
+          {% for categoria in categorias %}
+          <tr>
+            <td>{{ categoria['id'] }}</td>
 
-  <a href="{{ url_for('admin_dashboard') }}" class="accion-volver">← Volver al dashboard</a>
+            <td>{{ categoria['nombre'] }}</td>
 
-  </main>
-</body>
+            <td>
+              <img
+                src="{{ url_for('static', filename='img/' + categoria['imagen']) }}"
+                alt="{{ categoria['nombre'] }}"
+                width="80"
+                height="80"
+                style="object-fit: cover"
+              />
+            </td>
+
+            <td>
+              <a
+                href="/categorias/editar/{{ categoria['id'] }}"
+                class="accion-editar"
+              >
+                Editar
+              </a>
+
+              &nbsp;
+
+              <a
+                href="/categorias/eliminar/{{ categoria['id'] }}"
+                class="accion-eliminar"
+                onclick="
+                  return confirm(
+                    '¿Eliminar esta categoría? Esta acción no se puede deshacer.',
+                  );
+                "
+              >
+                Eliminar
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <a href="{{ url_for('admin_dashboard') }}" class="accion-volver">
+        ← Volver al dashboard
+      </a>
+    </main>
+  </body>
 </html>
