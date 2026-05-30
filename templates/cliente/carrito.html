@@ -1,69 +1,76 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tu Carrito — Bazar B.E.G.</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tu Carrito — Bazar B.E.G.</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/estilos.css') }}"
+    />
+  </head>
+  <body>
+    {% include 'cliente/_navbar.html' %}
 
-  {% include 'cliente/_navbar.html' %}
+    <div class="page">
+      <a href="{{ url_for('index') }}" class="back-link">← Volver al inicio</a>
+      <p class="section-title">Tu Carrito de Compras</p>
 
-  <div class="page">
-
-    <a href="{{ url_for('index') }}" class="back-link">← Volver al inicio</a>
-    <p class="section-title">Tu Carrito de Compras</p>
-
-    {% if carrito %}
-    <div class="carrito-card">
-      {% for p in carrito %}
-      <div class="carrito-item">
-        <div class="carrito-item-icon">
-          {% if p.imagen %}
-          <img src="{{ url_for('static', filename='img/' ~ p.imagen) }}"
-               alt="{{ p.nombre }}"
-               onload="this.style.display='block'; this.nextElementSibling.style.display='none'"
-               onerror="this.style.display='none'" />
-          {% endif %}
-          <span class="carrito-item-emoji">🛍️</span>
+      {% if carrito %}
+      <div class="carrito-card">
+        {% for p in carrito %}
+        <div class="carrito-item">
+          <div class="carrito-item-icon">
+            {% if p.imagen %}
+            <img
+              src="{{ url_for('static', filename='img/' ~ p.imagen) }}"
+              alt="{{ p.nombre }}"
+              onload="
+                this.style.display = 'block';
+                this.nextElementSibling.style.display = 'none';
+              "
+              onerror="this.style.display = 'none'"
+            />
+            {% endif %}
+            <span class="carrito-item-emoji">🛍️</span>
+          </div>
+          <div class="carrito-item-info">
+            <p class="carrito-item-name">{{ p.nombre }}</p>
+            <p class="carrito-item-price">${{ "%.2f"|format(p.precio) }}</p>
+          </div>
+          <a href="/eliminar/{{ p.id }}" class="btn-eliminar">Eliminar</a>
         </div>
-        <div class="carrito-item-info">
-          <p class="carrito-item-name">{{ p.nombre }}</p>
-          <p class="carrito-item-price">${{ "%.2f"|format(p.precio) }}</p>
+        {% endfor %}
+
+        <div class="carrito-total-row">
+          <span class="carrito-total-label">Total del Carrito:</span>
+          <span class="carrito-total-valor">${{ "%.2f"|format(total) }}</span>
         </div>
-        <a href="/eliminar/{{ p.id }}" class="btn-eliminar">Eliminar</a>
       </div>
-      {% endfor %}
 
-      <div class="carrito-total-row">
-        <span class="carrito-total-label">Total del Carrito:</span>
-        <span class="carrito-total-valor">${{ "%.2f"|format(total) }}</span>
+      <div style="display: flex; justify-content: flex-end; max-width: 680px">
+        <a href="{{ url_for('pago') }}" class="btn-pago">Proceder al Pago</a>
       </div>
+
+      {% else %}
+      <div class="carrito-card">
+        <div class="empty-state">
+          <div class="empty-state-icon">🛒</div>
+          <p style="font-weight: 600">Tu carrito está vacío</p>
+          <a href="/catalogo" class="btn-pago">Ver Productos</a>
+        </div>
+      </div>
+      {% endif %}
     </div>
 
-    <div style="display:flex; justify-content:flex-end; max-width:680px;">
-      <a href="#" class="btn-pago">Proceder al Pago</a>
-    </div>
+    <footer class="site-footer">
+      <a href="#">Acerca de Nosotros</a> &nbsp;|&nbsp;
+      <a href="#">Contáctanos</a>
+      <p style="margin-top: 8px">
+        @2026 BazarBEG. Todos los derechos reservados.
+      </p>
+    </footer>
 
-    {% else %}
-    <div class="carrito-card">
-      <div class="empty-state">
-        <div class="empty-state-icon">🛒</div>
-        <p style="font-weight:600;">Tu carrito está vacío</p>
-        <a href="/catalogo" class="btn-pago">Ver Productos</a>
-      </div>
-    </div>
-    {% endif %}
-
-  </div>
-
-  <footer class="site-footer">
-    <a href="#">Acerca de Nosotros</a> &nbsp;|&nbsp; <a href="#">Contáctanos</a>
-    <p style="margin-top:8px;">@2026 BazarBEG. Todos los derechos reservados.</p>
-  </footer>
-
-  {% include 'cliente/_toast.html' %}
-
-</body>
+    {% include 'cliente/_toast.html' %}
+  </body>
 </html>

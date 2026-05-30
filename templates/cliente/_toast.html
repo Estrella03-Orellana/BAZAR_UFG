@@ -9,24 +9,41 @@
 <script>
   function begShowToast(title, msg, isRemove) {
     const t = document.getElementById('beg-toast');
+
     document.getElementById('beg-toast-title').textContent = title;
     document.getElementById('beg-toast-msg').textContent = msg;
+
     document.getElementById('beg-toast-icon').textContent = isRemove ? '🗑️' : '✅';
-    if (isRemove) t.classList.add('toast-remove');
-    else t.classList.remove('toast-remove');
+
+    if (isRemove) {
+      t.classList.add('toast-remove');
+    } else {
+      t.classList.remove('toast-remove');
+    }
+
     t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
+
+    setTimeout(() => {
+      t.classList.remove('show');
+    }, 3000);
   }
 
   {% with messages = get_flashed_messages() %}
   {% if messages %}
-  window.addEventListener('DOMContentLoaded', function() {
+  window.addEventListener('DOMContentLoaded', function () {
     {% for msg in messages %}
-    {% if msg == 'added' %}
-    begShowToast('¡Producto agregado!', 'Tu producto se ha añadido al carrito.', false);
-    {% elif msg == 'removed' %}
-    begShowToast('¡Producto eliminado!', 'El producto se ha eliminado del carrito.', true);
-    {% endif %}
+
+      {% if msg == 'added' %}
+        begShowToast('¡Producto agregado!', 'Tu producto se ha añadido al carrito.', false);
+
+      {% elif msg == 'removed' %}
+        begShowToast('¡Producto eliminado!', 'El producto se ha eliminado del carrito.', true);
+
+      {% elif msg == 'paid' %}
+        begShowToast('¡Pago realizado!', 'Tu compra se completó con éxito.', false);
+
+      {% endif %}
+
     {% endfor %}
   });
   {% endif %}

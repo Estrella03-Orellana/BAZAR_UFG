@@ -3,3 +3,4 @@ id,nombre,apellido,email,password,rol
 2,Juan,Perez,juan@cliente.com,cliente123,CLIENTE
 3,Chele,Bolanos,chelinxtio@gmail.com,12345,CLIENTE
 4,Meynard,XD,hola@gmail.com,12345,CLIENTE
+5,Estrella,Orellana,orellana@gamil.com,123,CLIENTE

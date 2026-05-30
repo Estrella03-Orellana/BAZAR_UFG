@@ -16,11 +16,17 @@ app.register_blueprint(login_bp)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
+# ─────────────────────────────
+# FUNCIONES
+# ─────────────────────────────
+
 def cargar_productos():
     productos = []
     ruta = os.path.join(BASE_DIR, 'data', 'productos.csv')
+
     if not os.path.exists(ruta):
         return productos
+
     with open(ruta, newline='', encoding='utf-8') as archivo:
         reader = csv.DictReader(archivo)
         for fila in reader:
@@ -37,8 +43,10 @@ def cargar_productos():
 def cargar_categorias():
     categorias = []
     ruta = os.path.join(BASE_DIR, 'data', 'categorias.csv')
+
     if not os.path.exists(ruta):
         return categorias
+
     with open(ruta, newline='', encoding='utf-8') as archivo:
         reader = csv.DictReader(archivo)
         for fila in reader:
@@ -50,7 +58,9 @@ def cargar_categorias():
     return categorias
 
 
-# ── CLIENTE ──────────────────────────────
+# ─────────────────────────────
+# CLIENTE
+# ─────────────────────────────
 
 @app.route('/')
 def index():
@@ -62,12 +72,15 @@ def index():
 def catalogo():
     productos = cargar_productos()
     categorias = cargar_categorias()
+
     cat_id = request.args.get('cat', type=int)
     q = request.args.get('q', '').strip()
 
     filtrados = productos
+
     if cat_id:
         filtrados = [p for p in filtrados if p['categoria_id'] == cat_id]
+
     if q:
         filtrados = [p for p in filtrados if q.lower() in p['nombre'].lower()]
 
@@ -84,10 +97,14 @@ def catalogo():
 def detalle_producto(id):
     productos = cargar_productos()
     categorias = cargar_categorias()
+
     producto = next((p for p in productos if p['id'] == id), None)
+
     if not producto:
         return redirect('/catalogo')
+
     categoria = next((c for c in categorias if c['id'] == producto['categoria_id']), None)
+
     return render_template(
         'cliente/producto.html',
         producto=producto,
@@ -101,9 +118,12 @@ def detalle_producto(id):
 def agregar(id):
     if 'carrito' not in session:
         session['carrito'] = []
+
     session['carrito'].append(id)
     session.modified = True
+
     flash('added')
+
     ref = request.referrer
     return redirect(ref if ref else '/catalogo')
 
@@ -113,12 +133,15 @@ def agregar(id):
 def carrito():
     carrito_ids = session.get('carrito', [])
     productos_cargados = cargar_productos()
+
     carrito_productos = []
     total = 0
+
     for p in productos_cargados:
         if p["id"] in carrito_ids:
             carrito_productos.append(p)
             total += p["precio"]
+
     return render_template(
         'cliente/carrito.html',
         carrito=carrito_productos,
@@ -132,7 +155,22 @@ def eliminar(id):
     if 'carrito' in session and id in session['carrito']:
         session['carrito'].remove(id)
         session.modified = True
+
     flash('removed')
+    return redirect('/carrito')
+
+
+# ─────────────────────────────
+# 🔥 AQUÍ VA EL PAGO (IMPORTANTE)
+# ─────────────────────────────
+
+@app.route('/pago')
+@role_required(['CLIENTE'])
+def pago():
+    session['carrito'] = []
+    session.modified = True
+
+    flash('paid')
     return redirect('/carrito')
 
 
